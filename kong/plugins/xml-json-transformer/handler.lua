@@ -38,7 +38,7 @@ function xml_json_transformer:body_filter(config)
     if ngx.arg[2] then
       response_body = ctx.buffered
     end
-  parser:parse(resp_body)
+  parser:parse(response_body)
 
   local xml = handler.root
   json_text = cjson.encode(xml)
