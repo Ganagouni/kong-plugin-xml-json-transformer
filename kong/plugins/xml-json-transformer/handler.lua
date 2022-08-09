@@ -33,33 +33,33 @@ function xml_json_transformer:body_filter(config)
       ngx.ctx.buffered = {}
   end
 
-    if chunk ~= "" and not ngx.is_subrequest then
-        table.insert(ngx.ctx.buffered, chunk)
-        ngx.arg[1] = nil
-    end
+  if chunk ~= "" and not ngx.is_subrequest then
+      table.insert(ngx.ctx.buffered, chunk)
+      ngx.arg[1] = nil
+  end
 
-    if eof then
-        local resp_body = table.concat(ngx.ctx.buffered)
-        ngx.ctx.buffered = nil
-        pretty.dump(resp_body)
+  if eof then
+      local resp_body = table.concat(ngx.ctx.buffered)
+      ngx.ctx.buffered = nil
+      pretty.dump(resp_body)
 
-        local result ,errors = pcall(
-        function(resp_body)
-            parser:parse(resp_body)
-        end, resp_body)
+      local result ,errors = pcall(
+      function(resp_body)
+          parser:parse(resp_body)
+      end, resp_body)
 
-        if not result then
-            ngx.log(ngx.ERR, "parse error")
-            ngx.arg[1] = resp_body
-            ngx.arg[2] = true
-        else
-            xml = handler.root
-            pretty.dump(xml)
-            json_text = cjson.encode(xml)
-            ngx.arg[1] = json_text
-            ngx.arg[2] = true
-        end
-    end  
+      if not result then
+          ngx.log(ngx.ERR, "parse error")
+          ngx.arg[1] = resp_body
+          ngx.arg[2] = true
+      else
+          xml = handler.root
+          pretty.dump(xml)
+          json_text = cjson.encode(xml)
+          ngx.arg[1] = json_text
+          ngx.arg[2] = true
+      end
+  end  
 
 end 
 
