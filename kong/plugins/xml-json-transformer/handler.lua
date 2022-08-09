@@ -32,13 +32,13 @@ function xml_json_transformer:body_filter(config)
   local response_body =''
 
   local resp_body = ''
-  resp_body = string.sub(ngx.arg[1], 1, 1000)  
-    ctx.buffered = string.sub((ctx.buffered or "") .. resp_body, 1, 1000)
+  resp_body = string.sub(ngx.arg[1], 1, 2)  
+    ctx.buffered = string.sub((ctx.buffered or "") .. resp_body, 1, 2)
     -- arg[2] is true if this is the last chunk
     if ngx.arg[2] then
       response_body = ctx.buffered
     end
-  parser:parse(response_body)
+  parser:parse(resp_body)
 
   local xml = handler.root
   json_text = cjson.encode(xml)
