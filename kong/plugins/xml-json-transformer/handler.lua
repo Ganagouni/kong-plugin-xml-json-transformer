@@ -47,7 +47,7 @@ function xml_json_transformer:body_filter(config)
 end 
 
 -- set the plugin priority, which determines plugin execution order
-xml_json_transformer.PRIORITY = 990
+xml_json_transformer.PRIORITY = 20
 
 -- return our plugin object
 return xml_json_transformer
