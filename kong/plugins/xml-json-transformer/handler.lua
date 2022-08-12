@@ -30,8 +30,7 @@ function xml_json_transformer:body_filter(config)
  
   local ctx = ngx.ctx 
   local response_body =''
-  local xmlHandler = handler:new()
-  --local parser = xml2lua.parser( xmlHandler )
+
 
   local resp_body = ''
   resp_body = string.sub(ngx.arg[1], 1, 1000)  
@@ -40,7 +39,12 @@ function xml_json_transformer:body_filter(config)
     if ngx.arg[2] then
       response_body = ctx.buffered
     end
-  parser:parse(resp_body)
+  --parser:parse(resp_body)
+  local xmlHandler = resp_body
+  xmlHandler = handler:new()
+  local parser = xml2lua.parser( xmlHandler )
+  parser:parse(xmlHandler)
+  
 
   local xml = handler.root
   json_text = cjson.encode(xml)
