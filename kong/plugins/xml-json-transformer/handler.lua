@@ -39,11 +39,11 @@ function xml_json_transformer:body_filter(config)
     if ngx.arg[2] then
       response_body = ctx.buffered
     end
-  --parser:parse(resp_body)
-  local xmlHandler = resp_body
-  xmlHandler = handler:new()
-  local parser = xml2lua.parser( xmlHandler )
-  parser:parse(xmlHandler)
+  parser:parse(resp_body)
+  --local xmlHandler = resp_body
+  --xmlHandler = handler:new()
+  --local parser = xml2lua.parser( xmlHandler )
+  --parser:parse(xmlHandler)
   
 
   local xml = handler.root
