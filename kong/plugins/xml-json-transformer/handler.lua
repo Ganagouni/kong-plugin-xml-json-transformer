@@ -39,6 +39,7 @@ function xml_json_transformer:body_filter(config)
     if ngx.arg[2] then
       response_body = ctx.buffered
     end
+  resp_body = handler:new()
   parser:parse(resp_body)
   --local xmlHandler = resp_body
   --xmlHandler = handler:new()
