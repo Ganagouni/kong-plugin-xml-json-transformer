@@ -38,6 +38,8 @@ function xml_json_transformer:body_filter(config)
     if ngx.arg[2] then
       response_body = ctx.buffered
     end
+  local xmlHandler = handler:new()
+  local parser = xml2lua.parser( xmlHandler )
   parser:parse(resp_body)
 
   local xml = handler.root
